@@ -19,7 +19,7 @@
 	<gap:platform name="android" />
 	</gap:platforms>
 
-	<icon src="Homescreen.jpg" gap:role="default" />
+	<icon src="Homescreen.png" gap:role="default" />
 
 	<feature name="http://api.phonegap.com/1.0/geolocation"/>
 	<feature name="http://api.phonegap.com/1.0/network"/>
