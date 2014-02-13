@@ -34,7 +34,6 @@
 	font-size:0.5rem;
 	padding:0;
 	overflow:auto;
-	display:none;
 	padding-left:5%;
 	padding-right:5%;
 	font-family:Arial, Geneva, sans-serif;
@@ -44,7 +43,7 @@
 
 .button {
 	position:absolute;
-	display:none;
+
 	z-index:100;
 }
 
@@ -84,7 +83,7 @@ ul {
 }
 
 hr {
-	display:none;
+
 }
 
 #News hr {
@@ -151,7 +150,7 @@ div.slideshow div.last-active {
 }
 
 .SubpageContainer {
-	display:none;
+
 }
 
 .link {
@@ -271,365 +270,11 @@ a {
     <div id="btnMail" class="button">
         <img src="AppDesign/Dominanz/Mail.png" class="btnImage" id="imgMail" onClick="Show(3);"/>
     </div>
-    <div id="btnNews" class="button" style="display:none">
+    <div id="btnNews" class="button" >
         <img src="AppDesign/Dominanz/News.png" class="btnImage" id="imgNews" onClick="Show(4);"/>
     </div>
 
 </div>
-<script>
-var Elements = new Array ("Info","Camera","Location", "Mail", "News");
-function SetPositions() {
-	var newsPresent = true;
-	if ($("#News #SubpageContainer0 #Titel_eingeben").length) newsPresent = false;
-	$("#News #SubpageContainer0 #Titel_eingeben").each(function(index, element) {
-      // alert(index);
-    });
-
-	var w = $("#YourPageContainer").width();
-	var h = $(window).height();
-
-	numOfButtons = 5;
-	if (!newsPresent) numOfButtons = 4;
-
-	var e1 = Math.ceil (w / numOfButtons);
-	var y = h-e1-1;
-
-	SetPos ("Info", 0, y, e1);
-	SetPos ("Camera", e1, y, e1);
-	SetPos ("Location", 2*e1, y, e1);
-	SetPos ("Mail", 3*e1, y, e1);
-	if (newsPresent) SetPos ("News", 4*e1, y, e1);
-	var h = $("#btnInfo").height();
-
-	border = Math.floor(w * 0.02);
-	border =0;
-
-	$("#Info").css("bottom",border+h+"px");
-	$("#Camera").css("bottom",border+h+"px");
-	$("#Location").css("bottom",border+h+"px");
-	$("#Mail").css("bottom",border+h+"px");
-	$("#News").css("bottom",border+h+"px");
-
-	if  (!newsPresent) {
-		$("#btnNews").css('display', 'none');
-	}
-
-	var vw = (w/10);
-	jQuery('html').css("font-size", vw+"px");
-}
-
-function SetPos (ele, x, y, w) {
-	$("#btn"+ele).css('bottom', '0px');
-	$("#btn"+ele).css('left', x+'px');
-	$("#img"+ele).width(w);
-	$("#btn"+ele).fadeIn (100);
-}
-
-function Show (ele) {
-	id = Elements[ele];
-	for (var i = 0; i < Elements.length; i++) {
-		if (Elements[i] == id) {
-			$('#'+Elements[i]+' table.SubmenuTable').show();
-			$('#'+Elements[i]+' div.SubpageContainer').hide();
-			$("#"+Elements[i]).fadeIn(100);
-		} else {
-			$("#"+Elements[i]).fadeOut(100);
-		}
-	}
-	$(".btnImageActive").each(function(){
-		$(this).removeClass('btnImageActive');
-		id2 = this.id.substring(3); // cut off 'img'
-		this.src = "AppDesign/Dominanz/"+id2 + ".png";
-	});
-	$('#img'+id).addClass('btnImageActive');
-	jQuery('#img'+id).attr('src', "AppDesign/Dominanz/"+id + "-on.png" );
-}
-
-function slide() {
-	for (i = 0; i < slideIds.length; i++) {
-		slideSwitch (slideIds[i]);
-	}
-}
-
-function slideSwitch(id) {
-	var active = $('#'+id+' div.active');
-	if ( active.length == 0 ) $active = $('#'+id+' div:last');
-	var next =  active.next().length ? active.next()
-		: $('#'+id+' div:first');
-
-	active.addClass('last-active');
-	next.css({opacity: 0.0})
-		.addClass('active')
-		.animate({opacity: 1.0}, 1000, function() {
-			active.removeClass('active last-active');
-		});
-	active.animate({opacity: 0.0}, 1000);
-}
-
-function ShowSubPage(pageId, subPageId) {
-	var name = Elements[pageId];
-	jQuery('#'+name+' table.SubmenuTable').hide();
-	jQuery('#'+name+' #SubpageContainer'+subPageId).show();
-	jQuery('[id^="slideshow'+pageId+'-'+subPageId+'"]').each(function(idx,obj) {
-		SetSlideDivs(obj.id);
-	});
-}
-
-function SetSlideDivs (slideId) {
-	var max = 0;
-	jQuery('#'+slideId+' div img').each(function(idx,obj) {
-		var h = obj.offsetHeight;
-		max = Math.max(h, max);
-	});
-	jQuery('#'+slideId).height(max);
-	jQuery('#'+slideId+' div').css('line-height', max+'px');
-	jQuery('#'+slideId+' div').each(function(idx,obj) {
-		jQuery(obj).height(max);
-	});
-}
-
-function OpenChild (url) {
-
-	window.plugins.childBrowser.showWebPage(url);
-
-}
-
-
-
-var slideIds = new Array();
-
-jQuery(window).load( function() {
-	jQuery('.slideshow').each (function(idx,obj) {
-		slideIds.push(this.id);
-		SetSlideDivs (this.id);
-	});
-
-
-});
-</script>
-
-<script>
-var Data = "<p>empty</p>";
-var appId = 43;
-var newVersion;
-var installedVersion = 38;
-var isLoading = false;
-var logData = "";
-var startY = 0;
-var timer = -1;
-
-var opts = {
-	lines: 13, // The number of lines to draw
-	length: 40, // The length of each line
-	width: 17, // The line thickness
-	radius: 60, // The radius of the inner circle
-	corners: 0, // Corner roundness (0..1)
-	rotate: 40, // The rotation offset
-	direction: 1, // 1: clockwise, -1: counterclockwise
-	color: '#000', // #rgb or #rrggbb or array of colors
-	speed: 0.8, // Rounds per second
-	trail: 37, // Afterglow percentage
-	shadow: false, // Whether to render a shadow
-	hwaccel: false, // Whether to use hardware acceleration
-	className: 'spinner', // The CSS class to assign to the spinner
-	zIndex: 2e9, // The z-index (defaults to 2000000000)
-	top: 'auto', // Top position relative to parent in px
-	left: 'auto' // Left position relative to parent in px
-};
-var spinner = new Spinner(opts);
-
-function Log(s) {
-	logData += s + "<br/>";
-	alert(s);
-	//$("#News").html(logData);
-	//$("#YourPageContainer").html(logData);
-}
-
-
-function GetData() {
-	spinner.spin(document.getElementById('YourPageContainer'));
-	Log("downloading");
-	$.ajax({url: 'http://www.dokmed-app.ch/getdata.asp?id='+appId,
-		success: function(data) {
-			$('#YourPageContainer').html(data);
-			Data = data;
-			SaveData ();
-			StartPresentation();
-			currentVersion = newVersion;
-		},
-		error: function(obj, status, error) {
-			Log (error);
-		},
-		crossDomain: true
-	});
-}
-
-function GetVersion() {
-	if (isLoading) return;
-	isLoading = true;
-	Log ("getting version");
-	$.ajax({url: 'http://www.dokmed-app.ch/connector/getversion.asp?id='+appId,
-		success: function(data) {
-			newVersion = parseInt (data, 10);
-			Log ("versions: installed="+installedVersion+" new="+newVersion+" current="+currentVersion);
-			if (newVersion > currentVersion) {
-				if (confirm("Es sind neuere Inhalte erhältlich. Sollen Sie heruntergeladen werden?")) {
-					GetData();
-					isLoading = false;
-				}
-			} else {
-				if (newVersion > installedVersion) {
-					LoadData();
-				} else {
-					StartPresentation();
-				}
-				installedVersion = newVersion;
-				isLoading = false;
-			}
-
-		},
-		error: function(obj, status, error) {
-			Log ("ajax error: " + status + "/" + error);
-			isLoading= false;
-			LoadData();
-		},
-		crossDomain: false
-	});
-}
-
-function SaveData() {
-	window.requestFileSystem(LocalFileSystem.PERSISTENT,100*1024*1024, doSave, errorHandler);
-}
-
-function LoadData() {
-	window.requestFileSystem(LocalFileSystem.PERSISTENT,100*1024*1024, doLoad, errorHandler);
-}
-
-function doLoad(fs) {
-	Log("loading");
-	fs.root.getFile('data.html', {create: true}, function(fileEntry) {
-		Log("found file");
-		fileEntry.file(function(file) {
-			Log("1");
-			var reader = new FileReader();
-			reader.onloadend = function(e) {
-				Log("loaded");
-				$('#YourPageContainer').html(e.target.result);
-				StartPresentation();
-			};
-			reader.onerror = function(e) {
-				Log("cannot load: " + e);
-			}
-			reader.readAsText(file);
-		}, errorHandler);
-
-	}, errorHandler);
-}
-
-function doSave(fs) {
-	fs.root.getFile('data.html', {create: true}, function(fileEntry) {
-	// writing
-		fileEntry.createWriter(function(fileWriter) {
-			fileWriter.write(Data);
-			Log("written");
-			localStorage.setItem("implVersion43", newVersion);
-		}, errorHandler);
-	}, errorHandler);
-}
-
-
-function errorHandler(e) {
-	var msg = e.code;
-	switch (e.code) {
-		case FileError.QUOTA_EXCEEDED_ERR: 	  msg = 'QUOTA_EXCEEDED_ERR';   break;
-		case FileError.NOT_FOUND_ERR:  msg = 'NOT_FOUND_ERR';   break;
-		case FileError.SECURITY_ERR:   msg = 'SECURITY_ERR';   break;
-		case FileError.INVALID_MODIFICATION_ERR:  msg = 'INVALID_MODIFICATION_ERR';  break;
-		case FileError.INVALID_STATE_ERR:  msg = 'INVALID_STATE_ERR';  break;
-		default: msg = 'Unknown Error'; break;
-	};
-	Log ('Error: ' + msg);
-	alert("Es ist ein Fehler aufgetreten: /r/n"+msg);
-	StartPresentation();
-}
-
-function StartPresentation() {
-	Log("StartPresentation");
-	SetPositions();
-	Show(0);
-	if (timer != -1) clearInterval (timer);
-	timer = setInterval( "slide()", 3000 );
-	SetPositions();
-	spinner.stop();
-	Log("Presentation started");
-}
-
-function Connect() {
-	var networkState = navigator.network.connection.type;
-	Log (networkState);
-	if (networkState != Connection.NONE) {
-		GetVersion();
-		return true;
-	} else {
-		return false;
-	}
-}
-
-function onResume() {
-	Log ("resume");
-	Connect();
-}
-
-function onBack() {
-	Log("back");
-	Show (currentPage);
-}
-
-function onDeviceReady() {
-	// Now safe to use the Web Marmalade API
-	currentVersion = localStorage.getItem("implVersion43") != null? localStorage.getItem("implVersion43") : installedVersion;
-	Log ("current version is:" + currentVersion);
-
-	if (!Connect()) {
-		if (currentVersion > installedVersion) {
-			LoadData();
-		} else {
-			StartPresentation();
-		}
-	}
-
-	var ua = navigator.userAgent.toLowerCase();
-	isAndroid = ua.indexOf("android") > -1;
-
-	//uses document because document will be topmost level in bubbling
-	$(document).on('touchmove',function(e){
-		if (isAndroid) return;
-		e.preventDefault();
-	});
-
-	$('body').on('touchstart','.Inhalt',function(e) {
-		var touchobj = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-		startY = parseInt(touchobj.clientY);
-	});
-
-	$('body').on('touchmove','.Inhalt',function(e) {
-		if (isAndroid) return;
-		var touchobj = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-		var dist = parseInt(touchobj.clientY) - startY;
-		e.currentTarget.scrollTop -= dist;
-		startY = parseInt(touchobj.clientY);
-		e.preventDefault();
-		e.stopPropagation();
-	});
-
-	document.addEventListener("resume", onResume, false);
-/*	document.addEventListener("online", onResume, false);
-	document.addEventListener("backbutton", onBack, false);*/
-}
-
-document.addEventListener("deviceready", onDeviceReady, false);
-
-</script>
 
 </body>
 </html>
