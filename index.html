@@ -441,6 +441,152 @@ var opts = {
 var spinner = new Spinner(opts);
 
 
+function Log(s) {
+	logData += s + "<br/>";
+	//$("#News").html(logData);
+	//$("#YourPageContainer").html(logData);
+}
+
+
+function GetData() {
+	spinner.spin(document.getElementById('YourPageContainer'));
+	Log("downloading");
+	$.ajax({url: 'http://www.dokmed-app.ch/getdata.asp?id='+appId,
+		success: function(data) {
+			$('#YourPageContainer').html(data);
+			Data = data;
+			SaveData ();
+			StartPresentation();
+			currentVersion = newVersion;
+		},
+		error: function(obj, status, error) {
+			Log (error);
+		},
+		crossDomain: true
+	});
+}
+
+function GetVersion() {
+	if (isLoading) return;
+	isLoading = true;
+	Log ("getting version");
+	$.ajax({url: 'http://www.dokmed-app.ch/connector/getversion.asp?id='+appId,
+		success: function(data) {
+			newVersion = parseInt (data, 10);
+			Log ("versions: installed="+installedVersion+" new="+newVersion+" current="+currentVersion);
+			if (newVersion > currentVersion) {
+				if (confirm("Es sind neuere Inhalte erhältlich. Sollen Sie heruntergeladen werden?")) {
+					GetData();
+					isLoading = false;
+				}
+			} else {
+				if (newVersion > installedVersion) {
+					LoadData();
+				} else {
+					StartPresentation();
+				}
+				installedVersion = newVersion;
+				isLoading = false;
+			}
+
+		},
+		error: function(obj, status, error) {
+			Log ("ajax error: " + status + "/" + error);
+			isLoading= false;
+			LoadData();
+		},
+		crossDomain: false
+	});
+}
+
+function SaveData() {
+	window.requestFileSystem(LocalFileSystem.PERSISTENT,100*1024*1024, doSave, errorHandler);
+}
+
+function LoadData() {
+	window.requestFileSystem(LocalFileSystem.PERSISTENT,100*1024*1024, doLoad, errorHandler);
+}
+
+function doLoad(fs) {
+	Log("loading");
+	fs.root.getFile('data.html', {create: true}, function(fileEntry) {
+		Log("found file");
+		fileEntry.file(function(file) {
+			Log("1");
+			var reader = new FileReader();
+			reader.onloadend = function(e) {
+				Log("loaded");
+				$('#YourPageContainer').html(e.target.result);
+				StartPresentation();
+			};
+			reader.onerror = function(e) {
+				Log("cannot load: " + e);
+			}
+			reader.readAsText(file);
+		}, errorHandler);
+
+	}, errorHandler);
+}
+
+function doSave(fs) {
+	fs.root.getFile('data.html', {create: true}, function(fileEntry) {
+	// writing
+		fileEntry.createWriter(function(fileWriter) {
+			fileWriter.write(Data);
+			Log("written");
+			localStorage.setItem("implVersion43", newVersion);
+		}, errorHandler);
+	}, errorHandler);
+}
+
+
+function errorHandler(e) {
+	var msg = e.code;
+	switch (e.code) {
+		case FileError.QUOTA_EXCEEDED_ERR: 	  msg = 'QUOTA_EXCEEDED_ERR';   break;
+		case FileError.NOT_FOUND_ERR:  msg = 'NOT_FOUND_ERR';   break;
+		case FileError.SECURITY_ERR:   msg = 'SECURITY_ERR';   break;
+		case FileError.INVALID_MODIFICATION_ERR:  msg = 'INVALID_MODIFICATION_ERR';  break;
+		case FileError.INVALID_STATE_ERR:  msg = 'INVALID_STATE_ERR';  break;
+		default: msg = 'Unknown Error'; break;
+	};
+	Log ('Error: ' + msg);
+	alert("Es ist ein Fehler aufgetreten: /r/n"+msg);
+	StartPresentation();
+}
+
+function StartPresentation() {
+	Log("StartPresentation");
+	SetPositions();
+	Show(0);
+	if (timer != -1) clearInterval (timer);
+	timer = setInterval( "slide()", 3000 );
+	SetPositions();
+	spinner.stop();
+	Log("Presentation started");
+}
+
+function Connect() {
+	var networkState = navigator.network.connection.type;
+	Log (networkState);
+	if (networkState != Connection.NONE) {
+		GetVersion();
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function onResume() {
+	Log ("resume");
+	Connect();
+}
+
+function onBack() {
+	Log("back");
+	Show (currentPage);
+}
+
 function onDeviceReady() {
 	alert('3');
 	/*
