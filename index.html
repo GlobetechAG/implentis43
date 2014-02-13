@@ -319,6 +319,77 @@ function SetPositions() {
 	jQuery('html').css("font-size", vw+"px");
 }
 
+
+function SetPos (ele, x, y, w) {
+	$("#btn"+ele).css('bottom', '0px');
+	$("#btn"+ele).css('left', x+'px');
+	$("#img"+ele).width(w);
+	$("#btn"+ele).fadeIn (100);
+}
+
+function Show (ele) {
+	id = Elements[ele];
+	for (var i = 0; i < Elements.length; i++) {
+		if (Elements[i] == id) {
+			$('#'+Elements[i]+' table.SubmenuTable').show();
+			$('#'+Elements[i]+' div.SubpageContainer').hide();
+			$("#"+Elements[i]).fadeIn(100);
+		} else {
+			$("#"+Elements[i]).fadeOut(100);
+		}
+	}
+	$(".btnImageActive").each(function(){
+		$(this).removeClass('btnImageActive');
+		id2 = this.id.substring(3); // cut off 'img'
+		this.src = "AppDesign/Dominanz/"+id2 + ".png";
+	});
+	$('#img'+id).addClass('btnImageActive');
+	jQuery('#img'+id).attr('src', "AppDesign/Dominanz/"+id + "-on.png" );
+}
+
+function slide() {
+	for (i = 0; i < slideIds.length; i++) {
+		slideSwitch (slideIds[i]);
+	}
+}
+
+function slideSwitch(id) {
+	var active = $('#'+id+' div.active');
+	if ( active.length == 0 ) $active = $('#'+id+' div:last');
+	var next =  active.next().length ? active.next()
+		: $('#'+id+' div:first');
+
+	active.addClass('last-active');
+	next.css({opacity: 0.0})
+		.addClass('active')
+		.animate({opacity: 1.0}, 1000, function() {
+			active.removeClass('active last-active');
+		});
+	active.animate({opacity: 0.0}, 1000);
+}
+
+function ShowSubPage(pageId, subPageId) {
+	var name = Elements[pageId];
+	jQuery('#'+name+' table.SubmenuTable').hide();
+	jQuery('#'+name+' #SubpageContainer'+subPageId).show();
+	jQuery('[id^="slideshow'+pageId+'-'+subPageId+'"]').each(function(idx,obj) {
+		SetSlideDivs(obj.id);
+	});
+}
+
+function SetSlideDivs (slideId) {
+	var max = 0;
+	jQuery('#'+slideId+' div img').each(function(idx,obj) {
+		var h = obj.offsetHeight;
+		max = Math.max(h, max);
+	});
+	jQuery('#'+slideId).height(max);
+	jQuery('#'+slideId+' div').css('line-height', max+'px');
+	jQuery('#'+slideId+' div').each(function(idx,obj) {
+		jQuery(obj).height(max);
+	});
+}
+
 function onDeviceReady() {
 	alert('2');
 	/*
