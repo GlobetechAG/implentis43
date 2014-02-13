@@ -279,6 +279,46 @@ a {
 <script>
 var Elements = new Array ("Info","Camera","Location", "Mail", "News");
 
+function SetPositions() {
+	var newsPresent = true;
+	if ($("#News #SubpageContainer0 #Titel_eingeben").length) newsPresent = false;
+	$("#News #SubpageContainer0 #Titel_eingeben").each(function(index, element) {
+      // alert(index);
+    });
+
+	var w = $("#YourPageContainer").width();
+	var h = $(window).height();
+
+	numOfButtons = 5;
+	if (!newsPresent) numOfButtons = 4;
+
+	var e1 = Math.ceil (w / numOfButtons);
+	var y = h-e1-1;
+
+	SetPos ("Info", 0, y, e1);
+	SetPos ("Camera", e1, y, e1);
+	SetPos ("Location", 2*e1, y, e1);
+	SetPos ("Mail", 3*e1, y, e1);
+	if (newsPresent) SetPos ("News", 4*e1, y, e1);
+	var h = $("#btnInfo").height();
+
+	border = Math.floor(w * 0.02);
+	border =0;
+
+	$("#Info").css("bottom",border+h+"px");
+	$("#Camera").css("bottom",border+h+"px");
+	$("#Location").css("bottom",border+h+"px");
+	$("#Mail").css("bottom",border+h+"px");
+	$("#News").css("bottom",border+h+"px");
+
+	if  (!newsPresent) {
+		$("#btnNews").css('display', 'none');
+	}
+
+	var vw = (w/10);
+	jQuery('html').css("font-size", vw+"px");
+}
+
 function onDeviceReady() {
 	alert('2');
 	/*
