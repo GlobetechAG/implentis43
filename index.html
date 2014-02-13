@@ -587,7 +587,7 @@ function onBack() {
 }
 
 function onDeviceReady() {
-	// Now safe to use the Web Marmalade API
+	alert("ready");
 	currentVersion = localStorage.getItem("implVersion43") != null? localStorage.getItem("implVersion43") : installedVersion;
 	Log ("current version is:" + currentVersion);
 
