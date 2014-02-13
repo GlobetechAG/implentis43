@@ -4,7 +4,7 @@
 	id			= "com.mwriley.pgbuild.sample"
 	version		= "1.0.0">
 
-	<name>PhoneGap Build Sample</name>
+	<name>Sklerodermie</name>
 
 	<description>
 		A sample PhoneGap application built to demo PhoneGap Build and the PhoneGap cloud debugger.
