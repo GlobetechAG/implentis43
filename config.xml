@@ -14,17 +14,17 @@
 		Martin Roth
 	</author>
 
-	<gap:platforms>
 	<gap:platform name="ios" />
 	<gap:platform name="android" />
-	</gap:platforms>
 
 	<icon src="Homescreen.png" gap:role="default" />
+	<gap:splash src="Homescreen.png" />
 
 	<feature name="http://api.phonegap.com/1.0/geolocation"/>
 	<feature name="http://api.phonegap.com/1.0/network"/>
+	<feature name="http://api.phonegap.com/1.0/file"/>
 
-	<access origin="http://phonegap.com" subdomains="true" />
+	<access origin="*" />
 	<preference name="phonegap-version" value="2.9.0" />
 
 </widget>
