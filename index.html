@@ -395,7 +395,8 @@ function SetSlideDivs (slideId) {
 }
 
 function OpenChild (url) {
-	window.plugins.childBrowser.showWebPage(url);
+	//window.plugins.childBrowser.showWebPage(url);
+	window.open(url,'_blank','location=yes')
 }
 
 var slideIds = new Array();
@@ -443,7 +444,7 @@ var spinner = new Spinner(opts);
 
 function Log(s) {
 	logData += s + "<br/>";
-	alert(s);
+	//alert(s);
 	//$("#News").html(logData);
 	//$("#YourPageContainer").html(logData);
 }
@@ -589,8 +590,6 @@ function onBack() {
 }
 
 function onDeviceReady() {
-	alert('4');
-	
 	currentVersion = localStorage.getItem("implVersion20") != null? localStorage.getItem("implVersion20") : installedVersion;
 	Log ("current version is:" + currentVersion);
 
