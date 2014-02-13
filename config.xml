@@ -18,13 +18,13 @@
 	<gap:platform name="android" />
 
 	<icon src="Homescreen.png" gap:role="default" />
-	<gap:splash src="Homescreen.png" />
+	<gap:splash src="splash320.png" />
 
 	<feature name="http://api.phonegap.com/1.0/geolocation"/>
 	<feature name="http://api.phonegap.com/1.0/network"/>
 	<feature name="http://api.phonegap.com/1.0/file"/>
 
 	<access origin="*" />
-	<preference name="phonegap-version" value="3.1.0" />
+	<preference name="phonegap-version" value="2.9.0" />
 
 </widget>
