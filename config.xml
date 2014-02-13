@@ -10,8 +10,8 @@
 		A sample PhoneGap application built to demo PhoneGap Build and the PhoneGap cloud debugger.
 	</description>
 
-	<author href="http://matthewriley.us">
-		Matthew Riley
+	<author href="http://www.globetech.ch">
+		Martin Roth
 	</author>
 
 	<gap:platforms>
@@ -19,11 +19,12 @@
 	<gap:platform name="android" />
 	</gap:platforms>
 
-	<icon src="icon.png" gap:role="default" />
+	<icon src="Homescreen.jpg" gap:role="default" />
 
 	<feature name="http://api.phonegap.com/1.0/geolocation"/>
 	<feature name="http://api.phonegap.com/1.0/network"/>
 
 	<access origin="http://phonegap.com" subdomains="true" />
+	<preference name="phonegap-version" value="2.9.0" />
 
 </widget>
