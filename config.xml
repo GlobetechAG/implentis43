@@ -17,7 +17,13 @@
 	<gap:platform name="ios" />
 	<gap:platform name="android" />
 
-	<icon src="Homescreen.png" gap:role="default" />
+	<icon src="ios/Homescreen57.png" gap:platform="ios" width="57" height="57" />
+	<icon src="ios/Homescreen72.png" gap:platform="ios" width="72" height="72" />
+	<icon src="ios/Homescreen114.png" gap:platform="ios" width="114" height="114" />
+	<icon src="ios/Homescreen120.png" gap:platform="ios" width="120" height="120" />
+	<icon src="ios/Homescreen144.png" gap:platform="ios" width="144" height="144" />
+	<icon src="ios/Homescreen152.png" gap:platform="ios" width="152" height="152" />
+
 	<gap:splash src="splash.png" />
 
 	<feature name="http://api.phonegap.com/1.0/geolocation"/>
@@ -25,7 +31,7 @@
 	<feature name="http://api.phonegap.com/1.0/file"/>
 
 	<access origin="*" />
-	<preference name="phonegap-version" value="2.7.0" />
+	<preference name="phonegap-version" value="2.9.0" />
 	<preference name="orientation" value="portrait" />
 
 </widget>
