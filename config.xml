@@ -31,8 +31,9 @@
 	<feature name="http://api.phonegap.com/1.0/network"/>
 	<feature name="http://api.phonegap.com/1.0/file"/>
 	
-	<gap:plugin name="org.apache.cordova.network-information" />
-	<gap:plugin name="org.apache.cordova.core.file" />
+	<gap:plugin name="NetworkStatus" value="org.apache.cordova.core.NetworkManager" />
+	<gap:plugin name="File" value="org.apache.cordova.core.FileUtils" />
+	<gap:plugin name="InAppBrowser" value="org.apache.cordova.core.InAppBrowser" />
 
 	<access origin="*" />
 	<preference name="phonegap-version" value="3.1.0" />
