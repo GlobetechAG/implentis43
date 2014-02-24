@@ -18,7 +18,7 @@
 	<gap:platform name="android" />
 
 	<icon src="Homescreen.png" gap:role="default" />
-	<gap:splash src="splash320.png" />
+	<gap:splash src="splash.png" />
 
 	<feature name="http://api.phonegap.com/1.0/geolocation"/>
 	<feature name="http://api.phonegap.com/1.0/network"/>
