@@ -34,6 +34,7 @@
 	<gap:plugin name="org.apache.cordova.core.network-information" />
 	<gap:plugin name="org.apache.cordova.core.file" />
 	<gap:plugin name="org.apache.cordova.core.inappbrowser" />
+	<gap:plugin name="com.phonegap.plugin.statusbar" />
 
 	<access origin="*" />
 	<preference name="phonegap-version" value="3.3.0" />
