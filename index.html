@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
 
 <script type="text/javascript" src="phonegap.js"></script>
-<script type="text/javascript" charset="utf-8" src="statusbar.js"></script>
+
 <script src="Script/jquery-1.10.2.min.js" ></script>
 <script src="spin.min.js" ></script>
 
@@ -595,7 +595,7 @@ function onBack() {
 }
 
 function onDeviceReady() {
-//	StatusBar.hide();
+
 	currentVersion = localStorage.getItem("implVersion43") != null? localStorage.getItem("implVersion43") : installedVersion;
 	Log ("current version is:" + currentVersion);
 
