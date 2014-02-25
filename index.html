@@ -395,9 +395,11 @@ function SetSlideDivs (slideId) {
 	});
 }
 
+var childWindow = null;
+
 function OpenChild (url) {
 	//window.plugins.childBrowser.showWebPage(url);
-	window.open(url,'_blank','location=yes')
+	childWindow = window.open(url,'_blank','location=yes');
 }
 
 var slideIds = new Array();
@@ -582,6 +584,7 @@ function Connect() {
 
 function onResume() {
 	Log ("resume");
+	if (childWindow != null) childWindow.close();
 	Connect();
 }
 
